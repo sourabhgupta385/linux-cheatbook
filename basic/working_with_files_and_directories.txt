@@ -1,0 +1,238 @@
+1. Specifying the Current Directory: Asingle dot (.) is used as a shortcut to refer to the directory you are currently in. This directory is known as the current directory
+
+2. Specifying the Parent Directory: Two dots (.., pronounced “dot-dot”) refer to the parent directory of the one you are currently in.
+
+3. Specifying a Home Directory: Atilde (~) can be used to refer to your home directory.
+
+4. ls: The ls command lists the contents of the current directory on your screen in multiple columns.
+
+	$ ls
+	Email notes.august Work
+	
+	- You can add the -R (recursive) option to the ls command to list all the files in your current directory, along with all the files in each of its subdirectories, and so on. For example,
+	
+	$ ls -R
+	Email notes.august Work
+	./Email
+	inbox save sent
+	./Work
+	final save
+	
+	- To see if two files are hard linked to each other, use the command ls -i.
+	
+	$ ls -i /usr/bin/gcc
+	344135 /usr/bin/gcc
+	$ ls -i /usr/bin/cc
+	344135 /usr/bin/cc
+	
+	If two files have the same inode number, then they are really the same file.
+	
+	- To see all files(including hidden files) in this directory, use ls -a:
+	
+	$ ls -a
+	. .. .mailrc .profile Email notes Work
+	
+	One dot is current directory and two dots is parent directory.
+	
+	- ls -b shows non-printing characters in file names:
+	
+	$ ls
+	udget Expenses
+	$ ls -b
+	\002udget Expenses
+	
+	- To get mor information about file, use ls -l command:
+	
+	$ ls -1
+	total 8
+	drwxr-xr-x 3 jmf group1 4096 Nov 29 02:34 Letters
+	Irwxr-xr-x 1 jmf group1 13 Apr 1 21:17 memos -> Letters/memos
+	-rwxr-xr-x 2 jmf group1 682 Feb 2 08:08 notes
+	
+	The first character in each line tells you what kind of file this is.
+	
+	-(Hiphen) Ordinary file 
+	c Special character file
+	d Directory 
+	l Symbolic link
+	b Special block file 
+	P Named pipe special file
+	
+	The rest of the first field, that is, the next nine characters (in these examples, rwxr-xr-x), contains information about the file’s permissions.
+
+5. cat:  cat (short for concatenate) takes any files you specify and displays them on the screen.	
+
+	$ cat review
+	I recommend publication of this article. It provides
+	a good overview of the topic and is
+	appropriate for the lead article of this issue.
+	
+	- To better view files that contain nonprinting ASCII characters, you can use the -v option.
+	
+	- You can send the output of cat to a file as well as to the screen. 
+	
+	$ cat physics > physics.backup
+	
+	In the preceding example, if there is no file named physics.backup in the current directory, the system creates one. If a file with that name already exists, the output of cat overwrites it-its original contents are replaced.
+	
+	- In order to add information to the end of a file, do the following:
+	
+	$ cat notes.august >> notes
+	
+	-  If you do not specify a file to use as input, cat will simply copy everything you type to its output. This provides a way to create simple files without using an editor. The command is
+	
+	$ cat > names
+	Nate nate@engineer.com
+	Rebecca rlf@library.edu
+	CTRL-D
+	
+6. pwd:  The command pwd (present working directory) tells you which directory you are currently in.
+
+	$ pwd
+	/home/raf
+	
+7. cd: You can move between directories by using the cd (change directory) command.
+
+	$ cd Work
+	
+	- If you issue cd by itself or cd ~, you will be moved to your home directory.
+	
+	$ pwd
+	/home/dkraut/work/cs106x/proj1/lib/Source
+	$ cd
+	$ pwd
+	/home/raf
+	
+	- The command cd-will return you to your previous directory
+	
+	$ pwd
+	/home/dkraut/work/cs106x/proj1/lib/Source
+	$ cd
+	$ pwd
+	/home/raf
+	$ cd -
+	$ pwd
+	/home/dkraut/work/cs106x/proj1/lib/Source
+
+8. mv: (CUT+PASTE) - the following moves the file names from the current directory to the directory /home/jmf/Info:
+
+	$ mv names /home/jmf/Info
+	
+	- You can move several files at once to the same destination directory by first naming all of the files to be moved, and giving the name of the destination last.
+	
+	$ mv section1 section2 section3 TermPaper
+	
+	-  Renaming is just part of moving. To rename a file in the current directory, you use mv, but with the new filename as the destination.
+	
+	$ mv overview intro
+	
+9. cp: (COPY+PASTE) - The cp command is similar to mv, except that it copies files rather than moving or renaming them. 
+
+	$ cp seattle seattle.bk
+
+	-  Suppose you have a directory called Project, and you wish to make a backup copy The following command creates a new directory, called Project.Backup, and copies all of the files and subdirectories in Project to the new directory:
+	
+	$ cp -r Project Project.Backup
+	
+10. ln: The ln command creates a link between files, which enables you to make a single file accessible at two or more locations in the directory system. The following links the file project.main in dkraut’s home directory with a new file of the same name in the current directory:
+
+	$ ln /home/dkraut/project.main project.main
+
+	Using ln in this way creates a hard link to the file in /home/dkraut, but there is still only one file. Now if you add a new line of information to your linked copy of project.main, the line also appears in the file in dkraut’s directory, since this is really the same file.
+	
+	- Symbolic links are created by using the ln command with the -s option.
+	
+	$ ln -s /var/X/docs/readme temp/x.readme
+	
+	This will create a symbolic link called x.readme in the temp directory.
+	
+11. rm: To delete a file, rm is used.
+
+	$ ls
+	notes research temp
+	$ rm temp
+	$ ls
+	notes research
+	$ rm notes research #Delete multiple files at same time.
+	$ ls
+	$
+
+	- Delete all files by using wildcard character.
+	
+	$ rm *
+	
+	- To remove a directory that is not empty, together with all of the files and subdirectories it contains, use rm with the -r (recursive) option, as shown here:
+	
+	$ rm -r Work
+	
+12. mkdir: You can create new directories in your file system with the mkdir (make directory) command.
+
+	$ pwd
+	Work
+	$ ls
+	notes research temp
+	$ mkdir New
+	$ ls
+	notes New research temp
+	
+13. rmdir: If the directory is empty (it contains no files or subdirectories), you can use the rmdir (remove directory) command. 
+
+	$ rmdir New
+
+14. find: The find command searches through the contents of one or more directories, including all of their subdirectories. You have to tell find in which directory to start its search. The following example searches user jmf’s directory system for the file new_data and prints the full pathname of any file with that name that it finds:
+
+	$ pwd
+	/home/jmf
+	$ find . -name new_data -print
+	/home/jmf/Dir/Logs/new_data
+	/home/j mf/Cmds/new_data
+	
+	Note that you have to include the -print option. If you don’t, find will carry out its search but will not notify you of any files it finds.
+	
+	- To run a command in the background, you end it with an ampersand (&). The following command line runs find in the background to search the whole file system and send its output to found:
+	
+	$ find / -name new_data -print > found &
+	
+	- . For example, the following command line tells find to look for a file called music belonging to user sue that was modified more than a week ago:
+	
+	$ find . -name "music" -u sue -mtime +7 -print
+	
+15. chmod: To alter a file’s permissions, you use the chmod (change mode) command.
+
+	First, show which set of permissions you are changing with u for user, g for group, or o for other. Second, specify how they should be changed with + (to add permission) or - (to subtract permission). Third, list the permissions to alter: r for read, w for write, or x for execute. Finally, specify the file or files that the changes refer to.
+	
+	$ ls -1 quotations
+	-rwxr-xr-x 1 nate group1 346 Apr 27 03:32 quotations
+	$ chmod go-rx quotations
+	$ ls -1 quotations
+	-rwx 1 nate group1 346 Apr 27 03:32 quotations            #Removed read and execute permission for group and others.
+	
+	- Another form of the chmod command lets you set the permissions directly by using a numeric code to specify them.
+	
+	$ chmod 700 quotations       # It sets read, write, and execute permissions for the owner only.
+	
+	Numeric codes: Read-4 , Write-2, Execute-1
+	
+16. chown: (Changes owner of file)- The chown command takes two arguments: the login name of the new owner and the name of the file. The following makes liz the new owner of the file contact_info:
+
+	$ chown liz contact_info
+	
+17. chgrp: (Changes the group to which file belongs to)- The following command changes data_file so that it belongs to the group students:
+
+	$ chgrp students data_file
+	
+18. head: head shows you the beginning of a file.
+
+	$ head transactions     # shows beginning lines of transactions file
+	
+19 tail: tail shows you the end of the file.
+
+	$ tail transactions     # shows ending lines of transactions file.
+	$ tail -3 transactions  # shows last three lines of transactions file.
+	
+Some other basic commands are:
+
+touch: Create an empty file	
+locate: Search for files by name
+umask: Set default file permissions
+pg, more,less: Display a file
