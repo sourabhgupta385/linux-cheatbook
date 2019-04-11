@@ -1,0 +1,64 @@
+1. Grouping Commands: you can enter several different commands at once on one line by separating them with a semicolon. For example, the following command line tells the shell to run date first, and then ls -l, just as if you had typed each command on a separate line:
+
+	$ date; ls -l
+	
+2. Using Wildcards:
+
+	*:  *html  :  Matches any filenames ending in html, including html and index.html.
+		note*  :  Matches any filenames beginning in note, such as note:8.28.
+		*kili* :  Matches any filename containing the string “kili” anywhere in the name.
+		
+	?:  email? :  Matches any filename consisting of “email” followed by exactly one character, including email1 but not email or email.1.
+	
+	[]: Brackets match any one of a set of characters that they enclose. For example,
+		[Jj]mf :  Matches either of the filenames Jmf or jmf.
+
+		You can indicate a range or sequence of characters in brackets with a -. For example,
+	
+		[A-N] Matches any of the uppercase characters between Aand N.
+		[a-z] Matches any lowercase character.
+		[A-z] Includes all upper- and lowercase characters.
+		[0–9] Includes all digits.
+
+3. Shell Redirection Operators:
+
+		Symbol 			Example 					Function
+		| 				cmd1 | cmd2 				Run cmd1 and send output to cmd2
+		> 				cmd > file 					Send output of cmd to file
+		>> 				cmd >> file 				Append output of cmd to file
+		< 				cmd < file 					Take input for cmd from file
+		/dev/stdin 		cmd /dev/stdin 				Take input from keyboard
+		2> 				cmd 2> errorfile 			Send standard error to errorfile (ksh, bash)
+		2>&1 			cmd > msgs 2>&1 			Send both output and standard error to msgs (sh, ksh, and bash)
+		/dev/tty 		(cmd > /dev/tty) >& error	Redirect output to screen, and error to error (csh, tcsh, and bash)
+		>& 				cmd >& msgs 				Send both output and errors to msgs (csh, tcsh, and bash)
+
+4. Running Commands in the Background: An & symbol at the end of a command line directs the shell to execute the command in the background.
+
+5. Job Control: The job control commands allow you to terminate a background job (kill it), suspend a background job temporarily (stop it), resume a suspended job in the background, move a background job to the foreground, and suspend a foreground job.
+
+		Command 				Effect
+		jobs 					List all jobs
+		CTRL-Z 					Suspend current (foreground) process
+		bg %n 					Resume stopped job in background
+		fg %n 					Resume job in foreground
+		stop %n 				Suspend background job. In bash, use kill −s STOP %n
+		kill %n 				Terminate job
+
+		You use the % sign to introduce the job identifier, so %1 refers to job 1.
+
+6. Shell Variables:
+
+		sh, ksh, or bash 		 			Effect
+		VAR=value  							Assign a value to a variable
+		$VAR  								Get the value of a variable
+		set  								List shell variables
+		unset VAR  							Remove a variable
+		env  								List all environment variables
+		export VAR=value  					Create an environment variable
+		unset VAR  							Remove an environment variable
+		set -o 								View shell options
+		set -o option  						Turn on a shell option
+		set +o option  						Turn off an option
+		alias name=value  					Create a command alias
+		unalias name  						Remove an alias
